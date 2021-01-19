@@ -5,10 +5,10 @@
 // items at indices 2,3,4 are distractors
 const questions = [
     ["Inside which HTML element do we put the JavaScript?",
-        "<script>",
-        "<javascript>",
-        "<js>",
-        "<scripting>"
+        "\<script\>",
+        "\<javascript\>",
+        "\<js\>",
+        "\<scripting\>"
     ],    
     ['What is the correct JavaScript syntax to write "Hello World"?',
         'document.write("Hello World")',
@@ -22,15 +22,17 @@ const questions = [
         'The <body> section',
         'The <head> section'
     ],
-    ['What is the correct syntax for referring to an external script called "xxx.js"?',
-        '<script src="xxx.js">',
-        '<script name="xxx.js">',
-        '<script href="xxx.js">',
-        '<script value="xxx.js">'
+    [`What is the correct syntax for referring to an external script called \"xxx.js\"?`,
+        `<script src="xxx.js">`,
+        `<script name="xxx.js">`,
+        `<script href="xxx.js">`,
+        `<script value="xxx.js">`
     ],
-    ['An external JavaScript must contain the <script> tag',
-        'False',
-        'True'
+    [`An external JavaScript must contain the \<script\> tag`,
+        `Not necessarily`,
+        `Always`,
+        `Sometimes`,
+        `Never`
     ],
     ['How do you write "Hello World" in an alert box?',
         'alert("Hello World")',
@@ -109,10 +111,10 @@ const questions = [
         'top(2,4)'
     ],
     ['What is the correct JavaScript syntax for opening a new window called "window2" ?',
-        'window.open("http://www.w3schools.com","window2")',
-        'new("http://www.w3schools.com","window2")',
-        'new.window("http://www.w3schools.com","window2")',
-        'open.new("http://www.w3schools.com","window2")'
+        `window.open("http://www.w3schools.com","window2")`,
+        `new("http://www.w3schools.com","window2")`,
+        `new.window("http://www.w3schools.com","window2")`,
+        `open.new("http://www.w3schools.com","window2")`
     ],
     ['How do you put a message in the browser\'s status bar?',
         'window.status = "put your message here"',

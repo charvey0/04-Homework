@@ -1,0 +1,9 @@
+.response {
+    padding: 5px;
+    margin: 5px;
+    width: 100%;
+}
+
+#prompt {
+    height:300px;
+}

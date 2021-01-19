@@ -41,6 +41,42 @@
 
     <!-- Main Display -->
     <main id = "main" class="container">
+      <div id="display1">
+        <h1 style="padding-top: 75px;">Welcome to the JavaScript Challenge</h1>
+        <br>
+        <h2>Here are the rules:</h2>
+        <ul style="font-size: 25px;">
+          <li>A timer will be set to 60 seconds and begin after the countdown.</li>
+          <li>You will be asked questions about JavaScript (and HTML and CSS).</li>
+          <li>For each correct response, you will earn one point.</li>
+          <li>An incorrect response will reduce your time by 5 seconds.</li>
+          <li>When there is no time left, you will be given a final score.</li>
+          <li>If your score is in the top ten, you will become a member of the Hall of Fame!</li>
+        </ul>
+        <div id ="begin" class="btn btn-success">Begin</div>
+      </div>
+
+      
+      <div id="display2">
+        <div class="row" style="padding-top: 75px;">
+          <div id="question" class="col-sm-9">
+            <div style="font-size: x-large"><h1 id="prompt"></h1></div>
+            <div class="btn btn-success response" id="resp1"></div><br></br>
+            <div class="btn btn-success response" id="resp2"></div><br></br>
+            <div class="btn btn-success response" id="resp3"></div><br></br>
+            <div class="btn btn-success response" id="resp4"></div><br></br>
+            <div><hr><h3 id="result"></h3></div>
+          </div>
+          <div class="col-sm-3">
+            <h1>Score: <span id="score"></span></h1>
+            <h1>Time: <span id="time"></span></h1>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <div id="display3" style="padding-top: 75px;"></div>
+      </div>
     </main>
 
 
