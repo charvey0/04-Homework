@@ -134,6 +134,7 @@ function sortScores(scores){
 // WAITING FOR: user to push the "Begin" button
 // NEXT: takeQuiz()
 function init() {
+    $("#hall").hide();
 
     display1.show();
     display2.hide();
@@ -301,6 +302,19 @@ function revealScore(score) {
         again.off();
         takeQuiz();
     }); 
+
+
+    var backToRules = $("<button>");
+    backToRules.text("Read the rules");
+    backToRules.addClass("btn btn-secondary");
+    display3.append(backToRules);
+    backToRules.on("click", function () {
+        backToRules.off();
+        init();
+    }); 
+
+
+
 }
 
 

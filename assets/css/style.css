@@ -31,6 +31,10 @@ main{
     margin-top: 90px;
 }
 
+.btn {
+    margin: 10px;
+}
+
 #display1, #display2, #display3  { padding:50px;}
 
 #hall {
