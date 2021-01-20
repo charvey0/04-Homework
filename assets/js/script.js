@@ -159,7 +159,21 @@ function init() {
 // WAITING FOR: user to push the "Take the Quiz again" button
 // NEXT: takeQuiz()
 function showHallofFame() {
+    var hallDisplay = $("#display1");
+    hallDisplay.addClass("text-center");
+    hallDisplay.html("<hr>");
+    for(var i=hallScores.length-1 ; i>=0 ; i--){
+            hallDisplay.prepend("<div class='btn btn-outline-primary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
+    }
+    hallDisplay.prepend("<hr>");
 
+    var again = $("<button>");
+    again.text("Take the quiz");
+    again.addClass("btn btn-success");
+    hallDisplay.append(again);
+    again.on("click", function () {
+        takeQuiz();
+    });
 }
 
 
@@ -187,7 +201,7 @@ function takeQuiz() {
 
     nav2.on("click", function() {
         clearInterval(timer);
-        revealScore(score);
+        init();
     });
 
     dispScore.text(score);
