@@ -82,6 +82,8 @@ function askQuestion(i){
 // OUTPUT: TRUE if correct, FALSE if not
 function checkResult(r, c){
     var result = false;
+console.log(r);
+console.log(c);    
     if (r == c) {
         result = true;
     }
@@ -120,9 +122,6 @@ function sortScores(scores){
     while (scores.length > 10) { scores.pop();  }
 
     localStorage.setItem("hallScores", JSON.stringify(scores)); 
-    
-
-
     return scores;
 }
 
@@ -136,22 +135,24 @@ function sortScores(scores){
 // NEXT: takeQuiz()
 function init() {
     // hide and show navs and displays 
-    nav1.show();
-    nav2.hide();
-    nav3.hide();
+//    nav1.show();
+//    nav2.hide();
+//    nav3.hide();
     display1.show();
     display2.hide();
     display3.hide();
         
     // place eventListener on the button 
     $("#begin").on("click", function(e){
+      $("#begin").off();
       takeQuiz();
     });
 
     // place eventListener on nav1
-    $("#nav1").on("click", function(e){
-        showHallofFame();
-    });
+//    $("#nav1").on("click", function(e){
+//        $("#nav1").off();
+//        showHallofFame();
+//    });
 }
 
 
@@ -159,19 +160,24 @@ function init() {
 // WAITING FOR: user to push the "Take the Quiz again" button
 // NEXT: takeQuiz()
 function showHallofFame() {
-    var hallDisplay = $("#display1");
-    hallDisplay.addClass("text-center");
-    hallDisplay.html("<hr>");
+//    nav1.hide();
+//    nav2.show();
+//    nav3.show();
+    display3.show();
+    display1.hide();
+    display3.addClass("text-center");
+    display3.html("<hr>");
     for(var i=hallScores.length-1 ; i>=0 ; i--){
-            hallDisplay.prepend("<div class='btn btn-outline-primary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
+        display3.prepend("<div class='btn btn-outline-primary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
     }
-    hallDisplay.prepend("<hr>");
+    display3.prepend("<hr>");
 
     var again = $("<button>");
     again.text("Take the quiz");
     again.addClass("btn btn-success");
-    hallDisplay.append(again);
+    display3.append(again);
     again.on("click", function () {
+        again.off();
         takeQuiz();
     });
 }
@@ -185,13 +191,14 @@ function showHallofFame() {
 // NEXT: revealScore()
 function takeQuiz() {
     // hide and show navs and displays 
-    nav1.hide();
-    nav2.show();
-    nav3.hide();
+//    nav1.hide();
+//    nav2.show();
+//nav2.hide();
+//nav3.hide();
     display1.hide();
     display2.show();
     display3.hide();
-
+    $("#hall").hide();
 
     // set time
     var time = 60;
@@ -199,10 +206,12 @@ function takeQuiz() {
     var score = 0;
 
 
-    nav2.on("click", function() {
-        clearInterval(timer);
-        init();
-    });
+    // nav2.on("click", function() {
+    //     $(".response").off();
+    //     nav2.off();        
+    //     clearInterval(timer);
+    //     revealScore(score);
+    // });
 
     dispScore.text(score);
     // make trigger to count down time
@@ -210,18 +219,17 @@ function takeQuiz() {
         dispTime.text(time);
         time--; 
         if (time<0) { 
+            $(".response").off();
             clearInterval(timer); 
             revealScore(score);
         }
     }, 1000);
 
-    var i=0;
+    var j=0;
     var numberOfQuestions = questions.length;
-
-
-    
-    var correct = askQuestion(i++);
-    $(".response").on("click", function(e) {
+   
+    var correct = askQuestion(j++);
+    $(".response").on("click", function (e) {
         var t = "#";
         t += e.target.id;
 
@@ -237,19 +245,21 @@ function takeQuiz() {
             jQtarget.addClass("btn-danger");
             dispResult.text("Wrong!");
         }
-        setTimeout(function() { 
-          if (i>=numberOfQuestions) { 
-              clearInterval(timer); 
-              revealScore(score);
-          }
+         setTimeout(function() { 
+           if (j>=numberOfQuestions) { 
+               $(".response").off();
+               clearInterval(timer); 
+               revealScore(score);
+           }
     
-          correct = askQuestion(i++);
-          dispScore.html(score);   
-          jQtarget.removeClass("btn-danger");
-          jQtarget.addClass("btn-success");
-          jQtarget.css("color","white");
-          dispResult.text("");
-        }, 500);
+           correct = askQuestion(j++);
+           dispScore.html(score);   
+           jQtarget.removeClass("btn-danger");
+           jQtarget.addClass("btn-success");
+           jQtarget.css("color","white");
+           dispResult.text("");
+
+         }, 500);
     });
 }
 
@@ -260,9 +270,9 @@ function takeQuiz() {
 function revealScore(score) {
     // TODO:
     // hide nav2, nav1 === show nav3
-    nav1.hide();
-    nav2.hide();
-    nav3.show();
+//    nav1.hide();
+//    nav2.hide();
+//    nav3.show();
     display1.hide();
     display2.hide();
     display3.show();
@@ -271,6 +281,7 @@ function revealScore(score) {
     $("#nav3").on("click", function(){
         hallDisplay.hide();
         time = 60;
+        $("#nav3").off();
         init();
     });
     display3.html("<h1 style='margin: 70px'>Your final score is: "+score+" points!</h1>");
@@ -278,13 +289,12 @@ function revealScore(score) {
 
 
     var initials = localStorage.getItem("initials");
-    if (initials == null) {
+    if (initials === null) {
         initials = prompt("Please enter your initials.");
-    } else {
-        if (!confirm("Is this still "+initials+"?")){
+    } else if (!confirm("Is this still "+initials+"?")) {
             initials = prompt("Please enter your initials.");
         }
-    }
+
     localStorage.setItem("initials", initials);
     
     var currentScore = [initials, score];
@@ -313,6 +323,7 @@ function revealScore(score) {
     again.addClass("btn btn-success");
     display3.append(again);
     again.on("click", function () {
+        again.off();
         takeQuiz();
     }); 
 }
