@@ -159,7 +159,7 @@ function init() {
 // WAITING FOR: user to push the "Take the Quiz again" button
 // NEXT: takeQuiz()
 function showHallofFame() {
-    // TODO:
+
 }
 
 
@@ -183,6 +183,12 @@ function takeQuiz() {
     var time = 60;
     // set score to 0
     var score = 0;
+
+
+    nav2.on("click", function() {
+        clearInterval(timer);
+        revealScore(score);
+    });
 
     dispScore.text(score);
     // make trigger to count down time
@@ -249,6 +255,7 @@ function revealScore(score) {
     
     // add listener to the nav2 to stop the timer and set time =0 to end while loop
     $("#nav3").on("click", function(){
+        hallDisplay.hide();
         time = 60;
         init();
     });
@@ -275,6 +282,8 @@ function revealScore(score) {
     hallScores = sortScores(hallScores); 
 
     var hallDisplay = $("#hall").html("<hr>");
+    hallDisplay.show();
+    hallDisplay.css("background-color: white;")
     for(var i=hallScores.length-1 ; i>=0 ; i--){
             hallDisplay.prepend("<div class='btn btn-outline-primary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
             if(initials == hallScores[i][0]){
@@ -283,8 +292,15 @@ function revealScore(score) {
             }
     }
     hallDisplay.prepend("<hr>");
-//    takeQuiz();
-// */
+
+
+    var again = $("<button>");
+    again.text("Take the quiz again");
+    again.addClass("btn btn-success");
+    display3.append(again);
+    again.on("click", function () {
+        takeQuiz();
+    }); 
 }
 
 
