@@ -252,7 +252,7 @@ function revealScore(score) {
         time = 60;
         init();
     });
-    display3.html("<h1 style='margin: 70px'>Your final score is: "+score+"!</h1>");
+    display3.html("<h1 style='margin: 70px'>Your final score is: "+score+" points!</h1>");
 
 
 
@@ -276,13 +276,13 @@ function revealScore(score) {
 
     var hallDisplay = $("#hall").html("<hr>");
     for(var i=hallScores.length-1 ; i>=0 ; i--){
-            hallDisplay.prepend("<div class='btn btn-outline-secondary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
+            hallDisplay.prepend("<div class='btn btn-outline-primary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
             if(initials == hallScores[i][0]){
-                $("#hall div").first().removeClass("btn-outline-secondary");
-                $("#hall div").first().addClass("btn-secondary");
+                $("#hall div").first().removeClass("btn-outline-primary");
+                $("#hall div").first().addClass("btn-primary");
             }
     }
-
+    hallDisplay.prepend("<hr>");
 //    takeQuiz();
 // */
 }
