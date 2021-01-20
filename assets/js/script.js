@@ -5,7 +5,6 @@
 **************************************************/
 
 var title = $("#title").html("JavaScript Challenge");
-//var navBar = $("#navbar");
 var navBrand = $("#navBrand").html("JavaScript Challenge");
 var nav1 = $("#nav1").html("View Hall of Fame");
 var nav2 = $("#nav2").html("Start Over");
@@ -14,7 +13,7 @@ var main = $("#main");
 var display1 = $("#display1");
 var display2 = $("#display2");
 var display3 = $("#display3");
-var prompt = $("#prompt");
+var questionText = $("#prompt");
 var resp1 = $("#resp1");
 var resp2 = $("#resp2");
 var resp3 = $("#resp3");
@@ -22,9 +21,6 @@ var resp4 = $("#resp4");
 var dispTime = $("#time");
 var dispScore = $("#score");
 var dispResult = $("#result");
-
-//var footer = $("#footer");
-//var copyright = $("#copyright");
 
 
 /*************************************************
@@ -43,16 +39,6 @@ var hallScores = getHallScores();
 **************************************************/
 
 
-// INPUT: 
-// OUTPUT: 
-function sampleFunction(){
-//  console.log("sampleFunction() called.");     /*
-        // TODO: 
-    
-// */
-}
-
-
 // INPUT: number of integers to be in the return array
 // OUTPUT: a random array from 1 to the input number
 function rArray(n){
@@ -69,7 +55,6 @@ function rArray(n){
       rand.push(array[j]);
       array.splice(j, 1);
     }
-
     return rand;
 }
     
@@ -82,7 +67,7 @@ function askQuestion(i){
     // make a array of random numbers 1-length of array-1
     var numberOfoptions = questions[i].length-1;
     var randomArray = rArray(numberOfoptions);    // load prompt and options
-    prompt.text(questions[i][0]);
+    questionText.text(questions[i][0]);
     resp1.text(questions[i][randomArray[0]]);
     resp2.text(questions[i][randomArray[1]]);
     resp3.text(questions[i][randomArray[2]]);
@@ -107,36 +92,38 @@ function checkResult(r, c){
 // INPUT: none
 // OUTPUT: an array of scores in the hall of fame in decending order
 function getHallScores(){
-//  console.log("getHallScores() called.");     /*
-        // TODO: 
-        // get hallScores from cache
+    // get hallScores from cache
     var hallScores = JSON.parse(localStorage.getItem("hallScores"));
   
-        // check in hallScores is null
+    // check in hallScores is null
     if (hallScores == null) {
         hallScores = [];
     }
+
     return hallScores;
-// */
 }
 
 
 // INPUT: hallScores
-// OUTPUT: an array of scores in the hall of fame in decending order
+// OUTPUT: [array of scores in HoF (decending order), isInHoF (T/F)]
 function sortScores(scores){
-  for(var i=scores.length-1 ; i>=0 ; i-- ){
+    for(var i=scores.length-1 ; i>=0 ; i-- ){
       for(var j=(i-1) ; j>=0 ; j--){
           if(scores[i][1] > scores[j][1]){
-              var temp = scores[i];
-              scores[i] = scores[j];
-              scores[j] = temp;
+            var temp = scores [i];
+            scores[i] = scores[j];
+            scores[j] = temp;
           }
       }
-  }  
-  while (scores.length > 10) { scores.pop();  }
-  localStorage.setItem("hallScores", JSON.stringify(scores)); 
+    }  
+    // delete scores after 10th place
+    while (scores.length > 10) { scores.pop();  }
+
+    localStorage.setItem("hallScores", JSON.stringify(scores)); 
     
-  return scores;
+
+
+    return scores;
 }
 
 /*************************************************
@@ -144,18 +131,7 @@ function sortScores(scores){
 **************************************************/
 
 
-// DISPLAYS:
-// WAITING FOR:
-// NEXT:
-function sampleState() {
-//  console.log("function sampleState() called;");   /*    
-        // TODO:
-
-// */
-}
-
-
-// DISPLAYS: the opening screen
+// DISPLAYS: the rule for the quiz
 // WAITING FOR: user to push the "Begin" button
 // NEXT: takeQuiz()
 function init() {
@@ -171,7 +147,22 @@ function init() {
     $("#begin").on("click", function(e){
       takeQuiz();
     });
+
+    // place eventListener on nav1
+    $("#nav1").on("click", function(e){
+        showHallofFame();
+    });
 }
+
+
+// DISPLAYS: the hall of fame
+// WAITING FOR: user to push the "Take the Quiz again" button
+// NEXT: takeQuiz()
+function showHallofFame() {
+    // TODO:
+}
+
+
 
 
 
@@ -215,7 +206,7 @@ function takeQuiz() {
         t += e.target.id;
 
         var jQtarget = $(t);
-        var userChoice = e.target.innerText;
+        var userChoice = jQtarget.text();
         if (checkResult(userChoice, correct)){
             score++;
             dispResult.text("Correct!");
@@ -263,13 +254,33 @@ function revealScore(score) {
     });
     display3.html("<h1 style='margin: 70px'>Your final score is: "+score+"!</h1>");
 
-    hallScores.splice(5, 0, ["MJH", score]);
 
-    var newHallScores = sortScores(hallScores);
-    console.log(newHallScores[0][0]);
 
-    for(var i=newHallScores.length-1 ; i>=0 ; i--){
-        display3.append("<h2>"+ordinalNumbers[i]+" place: "+newHallScores[i][0]+" ("+newHallScores[i][1]+" points)</h2");
+    var initials = localStorage.getItem("initials");
+    if (initials == null) {
+        initials = prompt("Please enter your initials.");
+    } else {
+        if (!confirm("Is this still "+initials+"?")){
+            initials = prompt("Please enter your initials.");
+        }
+    }
+    localStorage.setItem("initials", initials);
+    
+    var currentScore = [initials, score];
+
+
+
+    hallScores.push(currentScore);
+
+    hallScores = sortScores(hallScores); 
+
+    var hallDisplay = $("#hall").html("<hr>");
+    for(var i=hallScores.length-1 ; i>=0 ; i--){
+            hallDisplay.prepend("<div class='btn btn-outline-secondary' style='width: 75%; margin: 10px;'>"+ordinalNumbers[i]+" place: "+hallScores[i][0]+" ("+hallScores[i][1]+" points)</div");
+            if(initials == hallScores[i][0]){
+                $("#hall div").first().removeClass("btn-outline-secondary");
+                $("#hall div").first().addClass("btn-secondary");
+            }
     }
 
 //    takeQuiz();

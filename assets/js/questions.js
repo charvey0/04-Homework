@@ -84,12 +84,16 @@ const questions = [
     ],
     ['What is the correct JavaScript syntax to insert a comment that has more than one line?',
     `/*This comment has
+
     more than one line*/`,
     `<!--This comment has
+    
     more than one line-->`,
     `//This comment has
+    
     more than one line//`,
     `##This comment has
+    
     ##more than one line`
     ],
     ['What is the correct way to write a JavaScript array?',
