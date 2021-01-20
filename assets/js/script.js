@@ -134,10 +134,7 @@ function sortScores(scores){
 // WAITING FOR: user to push the "Begin" button
 // NEXT: takeQuiz()
 function init() {
-    // hide and show navs and displays 
-//    nav1.show();
-//    nav2.hide();
-//    nav3.hide();
+
     display1.show();
     display2.hide();
     display3.hide();
@@ -148,11 +145,6 @@ function init() {
       takeQuiz();
     });
 
-    // place eventListener on nav1
-//    $("#nav1").on("click", function(e){
-//        $("#nav1").off();
-//        showHallofFame();
-//    });
 }
 
 
@@ -160,9 +152,7 @@ function init() {
 // WAITING FOR: user to push the "Take the Quiz again" button
 // NEXT: takeQuiz()
 function showHallofFame() {
-//    nav1.hide();
-//    nav2.show();
-//    nav3.show();
+
     display3.show();
     display1.hide();
     display3.addClass("text-center");
@@ -190,11 +180,7 @@ function showHallofFame() {
 // WAITING FOR: time to run out
 // NEXT: revealScore()
 function takeQuiz() {
-    // hide and show navs and displays 
-//    nav1.hide();
-//    nav2.show();
-//nav2.hide();
-//nav3.hide();
+
     display1.hide();
     display2.show();
     display3.hide();
@@ -205,13 +191,6 @@ function takeQuiz() {
     // set score to 0
     var score = 0;
 
-
-    // nav2.on("click", function() {
-    //     $(".response").off();
-    //     nav2.off();        
-    //     clearInterval(timer);
-    //     revealScore(score);
-    // });
 
     dispScore.text(score);
     // make trigger to count down time
@@ -268,11 +247,7 @@ function takeQuiz() {
 // WAITING FOR: user to click the "Begin" button
 // NEXT: takeQuiz
 function revealScore(score) {
-    // TODO:
-    // hide nav2, nav1 === show nav3
-//    nav1.hide();
-//    nav2.hide();
-//    nav3.show();
+
     display1.hide();
     display2.hide();
     display3.show();
